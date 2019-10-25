@@ -1,0 +1,11 @@
+{
+    "development": {
+      "username": "colab",
+      "password": "colab",
+      "database": "colab",
+      "host": "localhost",
+      "dialect": "postgres",
+      "operatorsAliases": false,
+      "omitNull" : true
+    }
+}

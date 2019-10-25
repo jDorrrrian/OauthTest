@@ -1,0 +1,33 @@
+{
+  "name": "oauthapitest",
+  "version": "1.0.0",
+  "description": "a test of using oauth for our own api",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha auth/tests/**/*.js --exit",
+    "test-dev": "nodemon --exec 'yarn test || exit 1'",
+    "authServer": "node auth/app.js",
+    "devAuth": "npx nodemon auth/app.js"
+  },
+  "author": "Jessin",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.2",
+    "oauth2-server": "^3.0.1",
+    "oauth20-provider": "^0.6.0",
+    "oidc-provider": "^6.12.13",
+    "pg": "^6.2.3",
+    "sequelize": "^5.19.6",
+    "sequelize-cli": "^5.5.1",
+    "sequelize-values": "1.1.0",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "nodemon": "^1.19.1",
+    "mocha": "^6.1.4"
+  }
+}

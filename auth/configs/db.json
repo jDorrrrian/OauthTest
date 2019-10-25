@@ -1,0 +1,18 @@
+{
+    "development": {
+        "user": "colab",
+        "password": "colab",
+        "database": "colab",
+        "options": {
+            "host": "localhost",
+            "dialect": "postgres",
+            "pool": {
+                "max": 5,
+                "min": 0,
+                "idle": 10000
+            },
+            "logging": true,
+            "timezone": "+00:00"
+        }
+    }
+}
