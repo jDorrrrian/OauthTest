@@ -1,17 +1,23 @@
-const { Token, AuthorizationCode, Client, ColabUser } = require('../models');
+const { Token, AuthorizationCode, Client, User } = require('../models');
 
 
 
 
 module.exports.model = {
     
-    getAccessToken: function(token) {
+    getAccessToken: function(bearerToken) {
         /* This is where you select the token from the database where the code matches */
         return Token.findOne({
             where : {
-                accessToken : token
-            }
-        });
+                accessToken : bearerToken
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'email', 'username']
+                }, Client
+            ]
+        }).then()
     },
     
     getclient : function (clientId, clientSecret) {

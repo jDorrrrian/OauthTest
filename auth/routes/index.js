@@ -15,7 +15,7 @@ const router = express.Router() // Instantiate a new router
 
 router.use("/auth", require("./auth"));
 router.use("/secure", require("./secure"));
-router.use("/", require("./public"));
+router.use("/public", require("./public"));
 
 module.exports = router;
 // Note that the next router uses middleware. That protects all routes within this middleware

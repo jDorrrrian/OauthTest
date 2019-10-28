@@ -10,7 +10,7 @@ const filePath = path.join(__dirname, '../public/oauthAuthenticate.html')
 router.get('/', (req,res) => {  // send back a simple form for the oauth
   res.sendFile(filePath)
 })
-router.post('/authorize', server.checkCredentials, server.authenticate)
+// router.post('/authorize', server.checkCredentials, server.authenticate)
 
 
 

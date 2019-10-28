@@ -23,7 +23,7 @@ module.exports.initiate = clientId => {
 }
 
 module.exports.getAuthorizationCode = (req, res, next) => {
-    OAuth2Server.authenticate()
+    console.log(req, res);
 }
 
 
@@ -33,9 +33,9 @@ module.exports.checkCredentials = (req, res, next) => {
 
     let REQ = OAuth2Server.Request(req);
     let RES = OAuth2Server.Response(res);
-    OAuth2Server.authenticate(REQ,RES, {}, ret => {
-        ret.
-    })
+    // OAuth2Server.authenticate(REQ,RES, {}, ret => {
+    //     ret.
+    // })
     console.log("req\n==================================================================================== \n", req);
     // console.log("res\n==================================================================================== \n",res);
     return ColabUser.findOne({
@@ -73,18 +73,13 @@ module.exports.authenticate = (req, res, next) => {
     console.log("\n==============================================================================\n")
     console.log(req);
     
-    let oreq = oauth.Request(req);
-    let ores= oauth.Response(res)
+    let model = db.model;
+    model.getAccessToken(req.query.bearerToken)
     
     console.log("\n==============================================================================\n")
+    console.log(req.query.bearerToken)
 
-    console.log(oreq, ores)
-    
-    oauth.authenticate({
-        
-    })
-
-
+    res.status(200).send("test");
 }
 
 

@@ -8,9 +8,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             field: 'id',
         },
-        clientId: {
-            type: DataTypes.INTEGER,
-        },
         clientSecret: { 
             type: DataTypes.TEXT
         },
@@ -20,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         redirectUris : {
             type: DataTypes.ARRAY(DataTypes.TEXT)
         },
+        scope: {
+          type: DataTypes.TEXT
+        }
     }, {
             freezeTableName: true,
             tableName: 'client',
@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true,
         }
     );
+
+    Client.associate = (models) => {
+      const { User } = models;
+      Client.belongsTo(User, {
+        as: 'user',
+        foreignKey: 'user_id',
+      })
+    }
     
     Client.getClient = (clientId, clientSecret) => {
         // query db for details with client

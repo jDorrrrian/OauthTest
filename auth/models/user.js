@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
 
-    ColabUser = sequelize.define('ColabUser', {
+    ColabUser = sequelize.define('User', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
             freezeTableName: true,
-            tableName: 'colab_user',
+            tableName: 'user',
             timestamps: true,
             underscored: true,
             paranoid: true

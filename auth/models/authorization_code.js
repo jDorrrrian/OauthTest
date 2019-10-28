@@ -18,12 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         redirectUri: { 
             type: DataTypes.TEXT
         },
-        client : {
-            type: DataTypes.INTEGER,
+        scope : {
+            type: DataTypes.TEXT
         },
-        user : {
-            type: DataTypes.INTEGER
-        }
     
     }, {
             freezeTableName: true,
@@ -37,7 +34,14 @@ module.exports = (sequelize, DataTypes) => {
 
 
     AuthorizationCode.associate = (models) => {
-        
+        const { Client, User} = models;
+        AuthorizationCode.belongsTo(Client, {
+            foreignKey: 'client',
+        });
+  
+        AuthorizationCode.belongsTo(User, {
+            foreignKey: 'user',
+        });
     }
     return AuthorizationCode;
 };

@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         user: { 
             type: DataTypes.TEXT
         },
+        scope: {
+            type: DataTypes.TEXT
+        }
     }, {
             freezeTableName: true,
             tableName: 'token',
@@ -30,6 +33,17 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
+    Token.associate = (models) => {
+        const {Client, User} = models;
+
+        Token.belongsTo(Client, {
+            foreignKey: 'client_id',
+        });
+  
+        Token.belongsTo(User, {
+            foreignKey: 'user_id',
+        });
+    }
 
     Token.save = (token, client, user) => {
         /* This is where you insert the token into the database */

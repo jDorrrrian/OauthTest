@@ -11,7 +11,7 @@ module.exports = {
     */  
 
     try {
-      await queryInterface.createTable('ColabUser', {
+      await queryInterface.createTable('User', {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
@@ -67,9 +67,6 @@ module.exports = {
           primaryKey: true,
           field: 'id',
         },
-        clientId: {
-            type: Sequelize.INTEGER,
-        },
         clientSecret: {
             type: Sequelize.TEXT
         },
@@ -79,6 +76,18 @@ module.exports = {
         redirectUris : {
             type: Sequelize.ARRAY(Sequelize.TEXT)
         },
+        scope: {
+          type: Sequelize.TEXT
+        },
+        user: { 
+          type: Sequelize.INTEGER,
+          references: {
+            model: {
+              tableName: 'User',
+              key: 'id'
+            }
+          },
+      },
       });
 
       await queryInterface.createTable('Token', {
@@ -94,6 +103,9 @@ module.exports = {
         accessTokenExpiresAt: {
             type: Sequelize.DATE
         },
+        scope: {
+          type: Sequelize.TEXT
+        },
         client : {
             type: Sequelize.INTEGER,
             references: {
@@ -107,7 +119,7 @@ module.exports = {
             type: Sequelize.INTEGER,
             references: {
               model: {
-                tableName: 'ColabUser',
+                tableName: 'User',
                 key: 'id'
               }
             },
@@ -134,6 +146,9 @@ module.exports = {
         redirectUri: { 
             type: Sequelize.TEXT
         },
+        scope: {
+            type: Sequelize.TEXT
+        },
         client : {
           type: Sequelize.INTEGER,
           references: {
@@ -147,7 +162,7 @@ module.exports = {
             type: Sequelize.INTEGER,
             references: {
               model: {
-                tableName: 'ColabUser',
+                tableName: 'User',
                 key: 'id'
               }
             },
