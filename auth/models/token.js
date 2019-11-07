@@ -37,28 +37,28 @@ module.exports = (sequelize, DataTypes) => {
         const {Client, User} = models;
 
         Token.belongsTo(Client, {
-            foreignKey: 'client_id',
+            foreignKey: 'client',
         });
   
         Token.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: 'user',
         });
     }
 
-    Token.save = (token, client, user) => {
-        /* This is where you insert the token into the database */
+    // Token.save = (token, client, user) => {
+    //     /* This is where you insert the token into the database */
        
-        db = {
-          accessToken: token.accessToken,
-          accessTokenExpiresAt: token.accessTokenExpiresAt,
-          refreshToken: token.refreshToken, // NOTE this is only needed if you need refresh tokens down the line
-          refreshTokenExpiresAt: token.refreshTokenExpiresAt,
-          client: client,
-          user: user,
-        }
+    //     db = {
+    //       accessToken: token.accessToken,
+    //       accessTokenExpiresAt: token.accessTokenExpiresAt,
+    //       refreshToken: token.refreshToken, // NOTE this is only needed if you need refresh tokens down the line
+    //       refreshTokenExpiresAt: token.refreshTokenExpiresAt,
+    //       client: client,
+    //       user: user,
+    //     }
 
-        return Token.create(db);    
-    };
+    //     return Token.create(db);    
+    // };
 
     Token.get = token => {
         Token.findOne({where: {accessToken: token}})

@@ -2,8 +2,11 @@ const express = require('express')
 
 const app = express()
 const port = 3030
-const bodyParser = require('body-parser')
-const oauthServer = require('./oauth/server.js')
+const bodyParser = require('body-parser');
+const oauthServer = require('./oauth/server.js');
+const oauth     = require('./oauth/oauth');
+
+app.oauth = oauth;
 
 
 //Here we are configuring express to use body-parser as middle-ware.

@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       const { User } = models;
       Client.belongsTo(User, {
         as: 'user',
-        foreignKey: 'user_id',
+        foreignKey: 'id',
       })
     }
     

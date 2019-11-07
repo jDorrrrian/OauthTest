@@ -8,7 +8,9 @@ const router = express.Router() // Instantiate a new router
 
 const filePath = path.join(__dirname, '../public/client/home.html')
 
-router.get('/auth', oauthServer.authenticate);
+
+// router.get('/auth', oauthServer.authenticate);
+
 
 router.get('/', (req,res) => {  // send back a simple form for the oauth
   res.sendFile(filePath);

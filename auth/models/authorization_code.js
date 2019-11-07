@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     
     }, {
             freezeTableName: true,
-            tableName: 'authorization_code',
+            tableName: 'AuthorizationCode',
             timestamps: true,
             underscored: true,
             omitNull:true,

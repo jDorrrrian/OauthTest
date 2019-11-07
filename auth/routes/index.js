@@ -3,6 +3,7 @@ const express = require('express')
 
 var oauth2lib = require('oauth20-provider');
 var oauth2 = new oauth2lib({log: {level: 2}});
+const oauth     = require('../oauth/oauth');
 
 const router = express.Router() // Instantiate a new router
 
@@ -13,10 +14,13 @@ const router = express.Router() // Instantiate a new router
 // })
 
 
+
+
 router.use("/auth", require("./auth"));
-router.use("/secure", require("./secure"));
 router.use("/public", require("./public"));
 
+// router.use(oauth.authorize);
+router.use("/secure", oauth.authorize, require("./secure"));
 module.exports = router;
 // Note that the next router uses middleware. That protects all routes within this middleware
 // app.use('/secure', (req,res,next) => {

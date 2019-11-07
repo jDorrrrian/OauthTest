@@ -57,6 +57,18 @@ module.exports = {
         password: {
             type: Sequelize.TEXT
         },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: 'created_at'
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            field: 'updated_at'
+        },
+        deletedAt: {
+            type: Sequelize.DATE,
+            field: 'deleted_at'
+        }
       });
 
 
@@ -87,7 +99,19 @@ module.exports = {
               key: 'id'
             }
           },
-      },
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: 'created_at'
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            field: 'updated_at'
+        },
+        deletedAt: {
+            type: Sequelize.DATE,
+            field: 'deleted_at'
+        }
       });
 
       await queryInterface.createTable('Token', {
@@ -124,6 +148,18 @@ module.exports = {
               }
             },
         },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: 'created_at'
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            field: 'updated_at'
+        },
+        deletedAt: {
+            type: Sequelize.DATE,
+            field: 'deleted_at'
+        }
       });
 
       
@@ -167,6 +203,18 @@ module.exports = {
               }
             },
         },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: 'created_at'
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            field: 'updated_at'
+        },
+        deletedAt: {
+            type: Sequelize.DATE,
+            field: 'deleted_at'
+        }
       });
 
 
