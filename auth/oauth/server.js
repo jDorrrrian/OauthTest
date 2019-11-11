@@ -5,6 +5,7 @@ const Op = require('sequelize');
 const { Client } = require('../models');
 
 const oauth = require("./oauth");
+var util = require('util');
 
 const Request = OAuth2Server.Request;
 const Response = OAuth2Server.Response;
@@ -103,10 +104,18 @@ module.exports.get_login = (req, res, next) => {
 
 module.exports.post_login = (req, res, next) => {
     // console.log(req.app.locals);
-
     db.model.getUser(req.body.email, req.body.password)
         .then(user => {
-            return res.json(user);
+            console.log(req);
+            // return res.json(user);
+            var path = 'http://localhost:8080/auth/authorization' ;
+            // console.log(req.body);
+            // console.log(util.format('/%s?client_id=%s&redirect_uri=%s', path, req.body.query.client_id, req.body.query.redirect_uri));
+            res.json({
+                user,
+                ...req.body
+            })
+            // return res.redirect(util.format('%s?client_id=%s&redirect_uri=%s', path, req.body.query.client_id, req.body.query.redirect_uri));
         })
 
 }

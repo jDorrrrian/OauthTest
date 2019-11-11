@@ -5,6 +5,7 @@ const port = 3030
 const bodyParser = require('body-parser');
 const oauthServer = require('./oauth/server.js');
 const oauth     = require('./oauth/oauth');
+const cors = require('cors')
 
 app.oauth = oauth;
 
@@ -13,7 +14,7 @@ app.oauth = oauth;
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
+app.use(cors());
 app.use('/', require('./routes/index'));
 
 
