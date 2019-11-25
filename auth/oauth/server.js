@@ -6,54 +6,22 @@ const { Client } = require('../models');
 
 const oauth = require("./oauth");
 var util = require('util');
+const crypto = require('crypto');
+
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
+
+const signingOptions = {
+    issuer : 'Colab.re api',
+    subject: 'userAuth',
+    expiresIn: "7d",
+    algorithm: "RS256"
+}
 
 const Request = OAuth2Server.Request;
 const Response = OAuth2Server.Response;
-
-// var render = require('co-views')('views');
-
-
-
-// module.exports.checkCredentials = (req, res, next) => {
-
-//     let REQ = OAuth2Server.Request(req);
-//     let RES = OAuth2Server.Response(res);
-//     // OAuth2Server.authenticate(REQ,RES, {}, ret => {
-//     //     ret.
-//     // })
-//     console.log("req\n==================================================================================== \n", req);
-//     // console.log("res\n==================================================================================== \n",res);
-//     return ColabUser.findOne({
-//         where:{
-//             email : req.body.email,
-//             password : req
-//         }
-//     }).then(entries => {
-        
-
-//         if( entries.length =! 1){
-            
-//             const params = [ // Send params back down
-//                 'client_id',
-//                 'redirect_uri',
-//                 'response_type',
-//                 'grant_type',
-//                 'state',
-//             ]
-//             .map(a => `${a}=${req.body[a]}`) 
-//             .join('&');
-//             return res.redirect(`/oauth?success=false&${params}`);
-//         }else{
-//             req.body.user = entries;
-//             return next();
-//         }
-//     }).catch(er => {
-//         console.log(er);
-//     });
-// }
-
-
-
+var privateKEY  = fs.readFileSync('./private.key', 'utf8');
+var publicKEY  = fs.readFileSync('./public.key', 'utf8');
 
 
 module.exports.getToken = (req, res, next) => {
@@ -70,6 +38,14 @@ module.exports.getToken = (req, res, next) => {
 
 }
 
+module.exports.get_client = (req, res, next) => {
+    console.log(req);
+    db.model.getClientById(req.query.id)
+        .then( client => {
+            return res.json(client);
+        })
+}
+
 module.exports.authenticate = (req, res, next) => {
     console.log(req);
     
@@ -81,14 +57,6 @@ module.exports.authenticate = (req, res, next) => {
             return res.json(user);
         })
 
-
-    // return oauth.authorize(request, response)
-    //     .then(code => {
-    //         return res.json(code);
-    //     })
-    //     .catch(err => {
-    //         return res.status(400).json(err);
-    //     })
 }
 
 module.exports.get_login = (req, res, next) => {
@@ -102,40 +70,50 @@ module.exports.get_login = (req, res, next) => {
     
 }
 
+
 module.exports.post_login = (req, res, next) => {
-    // console.log(req.app.locals);
-    db.model.getUser(req.body.email, req.body.password)
+    let response = new Response(res);
+    
+    let request = new Request(req);
+    db.model.getUser(request.body.email, request.body.password)
         .then(user => {
-            console.log(req);
-            // return res.json(user);
-            var path = 'http://localhost:8080/auth/authorization' ;
-            // console.log(req.body);
-            // console.log(util.format('/%s?client_id=%s&redirect_uri=%s', path, req.body.query.client_id, req.body.query.redirect_uri));
-            res.json({
-                user,
-                ...req.body
+            
+
+            let token = jwt.sign(user,privateKEY,signingOptions);
+            console.log(token);
+            console.log(request.body.query);
+            
+            return res.json({
+                token,
+                ...request.body
             })
-            // return res.redirect(util.format('%s?client_id=%s&redirect_uri=%s', path, req.body.query.client_id, req.body.query.redirect_uri));
         })
 
 }
-
 
 module.exports.post_authorize = (req, res, next) => {
     let request = new Request(req);
     let response = new Response(res);
 
-    if(!req.app.locals.user){
-        
+
+    var token = crypto.randomBytes(32).toString('hex');
+    let decode = jwt.decode(request.body.headers['x-colab-user-auth-token'], publicKEY, signingOptions);
+
+    let expire = new Date();
+    expire.setMonth(expire.getMonth() + 1);
+
+    let code = {
+        authorizationCode: token,
+        redirect_uri: request.body.data.redirect_uri,
+        scope : request.body.data.scope,
+        expiresAt : expire
     }
-    return oauth.authorize(request, response)
-        .then(success => {
-              // Successful logins should send the user back to /oauth/authorize.
-                res.json(success);
-        })
-        .catch(err => {
-            res.status(err.code || 500).json(err);
-        })
+
+    db.model.saveAuthorizationCode(code, request.body.data.client_id, decode.id );
+    return res.json({
+        code: token,
+        state: request.body.data.state
+    })
 }
 
 //0
@@ -143,32 +121,27 @@ module.exports.post_authorize = (req, res, next) => {
 //  'http://localhost:3030/redirection/0/09ru213oje'}"
 
 module.exports.get_authorize = (req, res, next) => {
-    console.log("get_authorize has been called");
+    console.log("\n======================\n get_authorize has been called");
 
-    if (!req.app.locals.user) {
-        return res.redirect(util.format('/login?redirect=%s&client_id=%s&redirect_uri=%s', req.path, req.query.client_id, req.query.redirect_uri));
-    }
-
-    // console.log(Op);
-    return Client.findAll({
+    return Client.findOne({
         where: {
-            id: req.query.clientId,
+            id: req.query.client_id,
         },
         raw: true
     }).then(client => {
 
-
         if(!client) return res.status(400).json({error: 'Invalid Client'});
+        console.log(client);
 
-        return client[0].redirectUris.forEach((uri, index) => {
+        return client.redirectUris.forEach((uri, index) => {
 
-            if(uri == req.query.redirectUri){
-                client[0].redirectUris = [uri];
+            if(uri == req.query.redirect_uri){
+                client.redirectUris = [uri];
 
                 return res.json(client)
             }
 
-            if(index+1 == client[0].redirectUris.length) 
+            if(index+1 == client.redirectUris.length) 
                 return res.status(400).json({error: 'Uri Not Found'}); 
         })
     }).catch(err => {

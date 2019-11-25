@@ -20,7 +20,7 @@ router.use("/auth", require("./auth"));
 router.use("/public", require("./public"));
 
 // router.use(oauth.authorize);
-router.use("/secure", oauth.authorize, require("./secure"));
+router.use("/secure", oauth.authenticate(), require("./secure"));
 module.exports = router;
 // Note that the next router uses middleware. That protects all routes within this middleware
 // app.use('/secure', (req,res,next) => {

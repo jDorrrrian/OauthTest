@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
 
-    ColabUser = sequelize.define('User', {
+    User = sequelize.define('User', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -56,5 +56,5 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    return ColabUser;
+    return User;
 }

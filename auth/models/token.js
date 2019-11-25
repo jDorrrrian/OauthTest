@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         accessTokenExpiresAt: {
             type: DataTypes.DATE
         },
+        refreshToken : {
+            type: DataTypes.TEXT
+        },
+        refreshTokenExpiresOn: {
+            type: DataTypes.DATE,
+            
+        },
         client : {
             type: DataTypes.INTEGER,
         },

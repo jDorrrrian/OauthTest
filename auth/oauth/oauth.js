@@ -17,3 +17,5 @@ const expressOauth = new ExpressOauth(config)
 const oauth = new OAuth2Server(config);
 
 module.exports = expressOauth
+// module.exports = oauth;
+

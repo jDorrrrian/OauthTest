@@ -25,10 +25,10 @@ const corsOptions = {
   }
 };
 
+router.use(cors(corsOptions));
 // router.post('/authorize', server.checkCredentials, server.authenticate)
 router.post('/token', oauth.token());
-router.use(cors(corsOptions));
-
+router.get ('/client', server.get_client);
 router.post('/login', server.post_login);
 router.get ('/login', server.get_login);
 router.get ('/authorize', server.get_authorize);

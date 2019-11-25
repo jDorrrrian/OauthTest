@@ -127,6 +127,12 @@ module.exports = {
         accessTokenExpiresAt: {
             type: Sequelize.DATE
         },
+        refreshToken : {
+          type: Sequelize.TEXT,
+        },
+        refreshTokenExpiresOn : {
+          type: Sequelize.DATE,
+        },
         scope: {
           type: Sequelize.TEXT
         },

@@ -29,35 +29,7 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true,
         }
     );
-
-    Client.associate = (models) => {
-      const { User } = models;
-      Client.belongsTo(User, {
-        as: 'user',
-        foreignKey: 'id',
-      })
-    }
-    
-    Client.getClient = (clientId, clientSecret) => {
-        // query db for details with client
-        log({
-          title: 'Get Client',
-          parameters: [
-            { name: 'clientId', value: clientId },
-            { name: 'clientSecret', value: clientSecret },
-          ]
-        })
-        db.client = { // Retrieved from the database
-          clientId: clientId,
-          clientSecret: clientSecret,
-          grants: ['authorization_code', 'refresh_token'],
-          redirectUris: ['http://localhost:3030/client/app'],
-        }
-        return new Promise(resolve => {
-          resolve(db.client)
-        })
-      };
-
+  
 
 
       
