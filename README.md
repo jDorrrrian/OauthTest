@@ -36,3 +36,5 @@ ex:
 }
 
 `
+
+This project was made at work, as research. My laptop was previously owned by an Eduardo, so now all of my commits are on the wrong name and I have not changed this. 
