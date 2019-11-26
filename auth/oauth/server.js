@@ -97,7 +97,7 @@ module.exports.post_authorize = (req, res, next) => {
 
 
     var token = crypto.randomBytes(32).toString('hex');
-    let decode = jwt.decode(request.body.headers['x-colab-user-auth-token'], publicKEY, signingOptions);
+    let decode = jwt.decode(request.body.headers['x-user-auth-token'], publicKEY, signingOptions);
 
     let expire = new Date();
     expire.setMonth(expire.getMonth() + 1);

@@ -59,42 +59,7 @@ module.exports.model = {
         }).catch(err => {
             console.log("getClient error: ", err);
         })
-    },/*
-{ id: 21,
-  authorizationCode: '426809e84a1deb12526251e7378d424fdcb13f6dab2234ed37d8ef5570f5d4ff',
-  expiresAt: 2019-12-13T20:41:03.000Z,
-  redirectUri: 'http://localhost:3030/redirection/0/09ru213oje',
-  scope: 'profile',
-  createdAt: '2019-11-13',
-  updatedAt: '2019-11-13',
-  deletedAt: null,
-  client: 
-   { id: 0,
-     clientSecret: '12345678900987654321',
-     grants: [ 'authorization_code' ],
-     redirectUris: 
-      [ 'http://localhost:3030/redirection/0/w09u340aw',
-        'http://localhost:3030/redirection/0/09ru213oje' ],
-     scope: 'profile',
-     createdAt: null,
-     updatedAt: null,
-     deletedAt: null },
-  user: 
-   { id: 0,
-     facebookId: '12456789',
-     facebookUrl: 'facebook.com/123456789',
-     facebookUsername: 'jessin',
-     name: 'Jessin Rodenburg',
-     firstName: 'Jessin',
-     lastName: 'Rodenburg',
-     email: 'jessinrocker@gmail.com',
-     status: 1,
-     authTicket: '12345678987654321',
-     password: 'test',
-     createdAt: null,
-     updatedAt: null,
-     deletedAt: null } }
-    */
+    },
 
     getAuthorizationCode: function (authorizationCode) {
         return AuthorizationCode.findOne({

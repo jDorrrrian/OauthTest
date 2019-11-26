@@ -12,18 +12,13 @@ router.get('/', (req,res) => {  // send back a simple form for the oauth
 })
 
 router.get('/user', oauth.authenticate({scope: 'profile'}), (req,res) => {  // send back a simple form for the oauth
-  console.log("\n============================================\n")
-  // console.log(req);
   db.model.getUserFromToken(req.headers.authorization.split(' ')[1])
     .then(user => {
       res.send(user) 
     })
-  
-  
 })
 
 router.get('/wall', oauth.authenticate({scope : 'wall'}),  (req, res) => {
-  console.log(res);
   res.send({"text": "You're only getting wall info here."})
 })
 
