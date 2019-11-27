@@ -1,5 +1,4 @@
-**Oauth
-I spent a very long time making this, figured someone else might be able to use this.
+I spent waaaaay too long making this. Most of the tutorials I found difficult, vague, or not properly informed. Some of the tutorials were really good, but I couldn't find it. However, once it clicked, it was done in a few days. I put it on here so someone else can learn from it.
 
 You should add a private.key and public.key - both RSA keys.
 
